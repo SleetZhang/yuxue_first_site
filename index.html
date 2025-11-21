@@ -5,39 +5,54 @@
   <title>Yuxue · 个人主页</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      background: #0f172a;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, "Noto Sans", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #020617;
       color: #e5e7eb;
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
+      padding: 16px;
     }
     .card {
-      max-width: 480px;
-      padding: 32px 28px;
-      background: rgba(15,23,42,0.9);
+      width: 100%;
+      max-width: 900px;
+      padding: 28px 28px 24px;
+      background: rgba(15, 23, 42, 0.94);
       border-radius: 18px;
-      box-shadow: 0 18px 40px rgba(0,0,0,0.4);
-      border: 1px solid rgba(148,163,184,0.35);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 4fr);
+      gap: 24px;
+    }
+    @media (max-width: 720px) {
+      .card {
+        grid-template-columns: 1fr;
+      }
     }
     h1 {
       margin: 0 0 8px;
-      font-size: 26px;
+      font-size: 28px;
     }
     p {
       margin: 4px 0;
-      line-height: 1.6;
+      line-height: 1.7;
       color: #cbd5f5;
     }
     .tag {
       display: inline-block;
-      margin-top: 10px;
+      margin-top: 12px;
       padding: 3px 10px;
       border-radius: 999px;
-      background: rgba(59,130,246,0.15);
+      background: rgba(59, 130, 246, 0.18);
       font-size: 12px;
       color: #bfdbfe;
     }
@@ -48,15 +63,100 @@
     a:hover {
       text-decoration: underline;
     }
+
+    /* 照片区域 */
+    .gallery {
+      position: relative;
+      width: 100%;
+      padding-top: 75%; /* 4:3 比例的盒子 */
+      border-radius: 16px;
+      overflow: hidden;
+      background: radial-gradient(circle at top left, #1d4ed8, #020617);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.9);
+    }
+    .gallery img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out, transform 8s ease-out;
+      transform: scale(1.05); /* 轻微放大，等会做缓慢移动 */
+    }
+    .gallery img.active {
+      opacity: 1;
+      transform: scale(1.08) translate3d(10px, -6px, 0); /* 缓慢移动一点点 */
+    }
+    .gallery-indicator {
+      position: absolute;
+      left: 50%;
+      bottom: 10px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+    .gallery-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.5);
+    }
+    .gallery-dot.active {
+      background: #38bdf8;
+      width: 18px;
+    }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>Yuxue</h1>
-    <p>欢迎来到我的小站 👋</p>
-    <p>这个网站目前只是一个简单的个人主页，后续可能会慢慢加点东西。</p>
-    <p>联系我：<a href="mailto:你的邮箱@yuxue.asia">zyx0000@yuxue.asia</a></p>
-    <span class="tag">yuxue.asia</span>
+    <!-- 左边：照片自动轮播 -->
+    <div class="gallery">
+      <!-- 这里的 src 文件名等会儿换成你自己的照片路径 -->
+      <img src="images/photo1.jpg" alt="Yuxue photo 1" class="active" />
+      <img src="images/photo2.jpg" alt="Yuxue photo 2" />
+      <img src="images/photo3.jpg" alt="Yuxue photo 3" />
+      <div class="gallery-indicator">
+        <span class="gallery-dot active"></span>
+        <span class="gallery-dot"></span>
+        <span class="gallery-dot"></span>
+      </div>
+    </div>
+
+    <!-- 右边：个人介绍 -->
+    <div>
+      <h1>Yuxue</h1>
+      <p>欢迎来到我的小站 👋</p>
+      <p>这里放几张自己的照片，当成一个简单的在线相册。</p>
+      <p>后面有空可能会慢慢加一点文字、作品或者别的东西。</p>
+      <p style="margin-top: 12px;">
+        联系我：
+        <a href="mailto:zyx0000@yuxue.asia">zyx0000@yuxue.asia</a>
+      </p>
+      <span class="tag">yuxue.asia</span>
+    </div>
   </div>
+
+  <script>
+    // 这里配置你的照片轮播
+    const images = Array.from(document.querySelectorAll(".gallery img"));
+    const dots = Array.from(document.querySelectorAll(".gallery-dot"));
+    let index = 0;
+
+    function showImage(i) {
+      images.forEach((img, idx) => {
+        img.classList.toggle("active", idx === i);
+      });
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle("active", idx === i);
+      });
+    }
+
+    // 每 4 秒切换一张
+    setInterval(() => {
+      index = (index + 1) % images.length;
+      showImage(index);
+    }, 4000);
+  </script>
 </body>
 </html>
