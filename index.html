@@ -9,30 +9,31 @@
       box-sizing: border-box;
     }
     body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        "Helvetica Neue", Arial, "Noto Sans", "PingFang SC",
-        "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      background: #020617;
-      color: #e5e7eb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 16px;
-    }
-    .card {
-      width: 100%;
-      max-width: 900px;
-      padding: 28px 28px 24px;
-      background: rgba(15, 23, 42, 0.94);
-      border-radius: 18px;
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 4fr);
-      gap: 24px;
-    }
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: #020617;
+  color: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 32px;            /* 原来是 16px，整体离四周近一点 */
+}
+    
+.card {
+  width: min(1200px, 95vw); /* 原来 max-width: 900px，整体放大 */
+  padding: 40px 40px 32px;  /* 卡片内边距也稍微大一点 */
+  background: rgba(15, 23, 42, 0.94);
+  border-radius: 22px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  display: grid;
+  grid-template-columns: minmax(0, 3.2fr) minmax(0, 4fr);
+  gap: 28px;
+}
+
     @media (max-width: 720px) {
       .card {
         grid-template-columns: 1fr;
@@ -66,14 +67,14 @@
 
     /* 照片区域 */
     .gallery {
-      position: relative;
-      width: 100%;
-      padding-top: 75%; /* 4:3 比例的盒子 */
-      border-radius: 16px;
-      overflow: hidden;
-      background: radial-gradient(circle at top left, #1d4ed8, #020617);
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.9);
-    }
+  position: relative;
+  width: 100%;
+  padding-top: 85%;          /* 原来 75%，图片区域更“高”一点 */
+  border-radius: 18px;
+  overflow: hidden;
+  background: radial-gradient(circle at top left, #1d4ed8, #020617);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+}
     .gallery img {
       position: absolute;
       inset: 0;
